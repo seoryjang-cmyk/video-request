@@ -1,0 +1,1317 @@
+<!doctype html>
+
+<html lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>🎬 영상 제작 요청서</title>
+
+  <style>
+
+    /* ================== (선택) LG EI 웹폰트 등록 ==================
+
+       사내 CDN/서버에 woff2 파일을 올린 뒤 아래 src 경로만 교체하세요.
+
+       EI 서체는 사내 가이드와 라이선스를 준수해야 합니다. */
+
+
+
+    /* 본문/제목 공통: LG EI Text (Regular/700) — 한 벌만 사용 */
+
+    /* @font-face {
+
+      font-family: 'LG EI Text';
+
+      src: url('/fonts/LGEIText-Regular.woff2') format('woff2');
+
+      font-weight: 400; font-style: normal; font-display: swap;
+
+    }
+
+    @font-face {
+
+      font-family: 'LG EI Text';
+
+      src: url('/fonts/LGEIText-Bold.woff2') format('woff2');
+
+      font-weight: 700; font-style: normal; font-display: swap;
+
+    } */
+
+
+
+    /* ================== LG Brand Tokens (이미지 기준) ================== */
+
+    :root{
+
+      --lg-red:    #A50034;  /* LG RED */
+
+      --lg-gray:   #6B6B6B;  /* LG GRAY */
+
+      --white:     #ffffff;
+
+      --black:     #000000;
+
+
+
+      /* 폰트 스택: EI Text → 시스템 폴백 (전체 공통 한 벌) */
+
+      --font-base: "LG EI Text","Pretendard","Noto Sans KR","Apple SD Gothic Neo",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+
+
+
+      /* UI 토큰 */
+
+      --bg:              #f3f4f6;
+
+      --surface:         #ffffff;
+
+      --text:            #0f172a;
+
+      --muted:           #64748b;
+
+      --border:          #e5e7eb;
+
+      --focus:           #93c5fd;
+
+      --control-h:       46px;
+
+      --radius-lg:       16px;
+
+      --radius-md:       12px;
+
+      --shadow-sm:       0 6px 18px rgba(15, 23, 42, 0.08);
+
+      --shadow-md:       0 10px 26px rgba(15, 23, 42, 0.12);
+
+
+
+      /* 컴포넌트 매핑 */
+
+      --brand-primary:   var(--lg-red);  /* 제출 버튼/액센트 */
+
+      --brand-accent:    var(--lg-gray); /* 보조 강조 */
+
+      --brand-muted:     #f9eef2;        /* LG RED 옅은 톤(배경) */
+
+    }
+
+
+
+    html,body{height:100%;}
+
+    body{
+
+      font-family: var(--font-base);
+
+      margin:0;
+
+      color: var(--text);
+
+      line-height:1.6;
+
+      /* RED/GRAY 은은한 텍스처 */
+
+      background:
+
+        radial-gradient(1000px 420px at 10% -10%, rgba(165,0,52,.12), transparent 60%),
+
+        radial-gradient(900px 420px at 115% 0%, rgba(107,107,107,.10), transparent 60%),
+
+        var(--bg);
+
+    }
+
+    /* 제목/본문/버튼 등 모든 요소가 동일 폰트 사용 */
+
+    h1,h2,h3,h4,button,input,select,textarea,label,.btn,.section-chip,.quickbar{
+
+      font-family: var(--font-base);
+
+    }
+
+
+
+    .wrap{ max-width: 980px; margin: 28px auto 64px; padding: 0 16px; }
+
+
+
+    /* ================== Hero Header ================== */
+
+    .hero{
+
+      position: relative;
+
+      padding: 22px 24px 20px;
+
+      border-radius: var(--radius-lg);
+
+      background: linear-gradient(135deg, var(--white) 0%, var(--brand-muted) 95%);
+
+      box-shadow: var(--shadow-md);
+
+      overflow: hidden;
+
+      isolation: isolate;
+
+    }
+
+    .hero::after{
+
+      content:"";
+
+      position:absolute; left:0; top:0; right:0; height:4px;
+
+      background: linear-gradient(90deg, var(--lg-red), #c5144a, var(--lg-red));
+
+      opacity:.95;
+
+    }
+
+    .hero-content{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+
+    .hero-left{ min-width: 0; }
+
+    .hero-title{
+
+      font-size: 22px; font-weight: 800; letter-spacing: -0.2px; margin:0 0 6px; color:#111827;
+
+    }
+
+    .hero-sub{ margin:0; font-size: 13px; color:#334155; font-weight:600; }
+
+
+
+    /* ================== Card & Section ================== */
+
+    .card{
+
+      margin-top: 14px;
+
+      background: rgba(255,255,255,0.94);
+
+      border: 1px solid rgba(255,255,255,0.95);
+
+      backdrop-filter: blur(6px);
+
+      -webkit-backdrop-filter: blur(6px);
+
+      border-radius: var(--radius-lg);
+
+      overflow: hidden;
+
+      box-shadow: var(--shadow-sm);
+
+    }
+
+    .section{
+
+      padding: 20px 24px;
+
+      border-top: 1px dashed rgba(15, 23, 42, 0.08);
+
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9));
+
+    }
+
+    .section:first-of-type{ border-top:none; }
+
+
+
+    .section-head{ display:flex; align-items:center; gap:10px; margin:0 0 14px; }
+
+    .section-icon{
+
+      width:28px; height:28px; border-radius:10px;
+
+      display:grid; place-items:center; font-size:14px; color:#fff;
+
+      background: var(--lg-red);
+
+      box-shadow: 0 8px 18px rgba(165,0,52,.25);
+
+      flex:0 0 28px;
+
+    }
+
+    .section-title{ margin:0; font-size:16px; font-weight:800; }
+
+    .section-chip{
+
+      margin-left:auto;
+
+      font-size:12px; color: var(--lg-red); background:#fff0f4; border:1px solid #ffd6e1;
+
+      padding:4px 8px; border-radius:999px; font-weight:700;
+
+    }
+
+
+
+    /* ================== Grid ================== */
+
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+
+    .col-12{ grid-column: span 12; }
+
+    .col-6 { grid-column: span 6; }
+
+    .col-4 { grid-column: span 4; }
+
+    @media (max-width: 900px){ .col-6{ grid-column: span 12; } }
+
+    @media (max-width: 680px){ .col-4{ grid-column: span 12; } }
+
+
+
+    /* ================== Fields ================== */
+
+    .field{ position:relative; }
+
+    label{
+
+      display:block; font-size:13px; font-weight:700; margin: 2px 0 8px; color:#0f172a;
+
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.2px;
+
+    }
+
+    .req::after{ content:" *"; color: var(--lg-red); font-weight:800; }
+
+
+
+    .input-wrap{ position:relative; }
+
+    .prefix{
+
+      position:absolute; left:10px; top:50%; transform: translateY(-50%);
+
+      font-size:14px; color:#94a3b8; pointer-events:none;
+
+    }
+
+    .with-prefix{ padding-left: 34px !important; }
+
+
+
+    input[type="text"],
+
+    input[type="date"],
+
+    select{
+
+      width:100%;
+
+      box-sizing: border-box;
+
+      height: var(--control-h);
+
+      padding: 0 12px;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius-md);
+
+      background: var(--surface);
+
+      color: var(--text);
+
+      outline: none;
+
+      font-size:14px;
+
+      line-height: var(--control-h);
+
+      transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+
+    }
+
+    input[type="date"]{ padding-right: 8px; line-height: normal; }
+
+    select{ line-height: normal; }
+
+    textarea{
+
+      width:100%; box-sizing:border-box; padding: 12px;
+
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+
+      background: var(--surface); color: var(--text); outline:none;
+
+      font-size:14px; min-height: 140px; resize: vertical; line-height:1.7;
+
+      transition: box-shadow .15s ease, border-color .15s ease, transform .06s ease;
+
+    }
+
+    input:focus, select:focus, textarea:focus{
+
+      border-color: var(--focus);
+
+      box-shadow: 0 0 0 4px rgba(147,197,253,0.35);
+
+    }
+
+    input:hover, select:hover, textarea:hover{ border-color:#cbd5e1; }
+
+
+
+    .hint{ font-size:12px; color: var(--muted); margin-top:6px; }
+
+    .error{ display:none; margin-top:6px; font-size:12px; color: var(--lg-red); font-weight:700; }
+
+
+
+    /* ================== Actions ================== */
+
+    .actions{
+
+      display:flex; gap:10px; justify-content:flex-end;
+
+      padding: 18px 24px; border-top: 1px solid rgba(15,23,42,.06);
+
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9));
+
+    }
+
+    .btn{
+
+      appearance:none; border:1px solid transparent;
+
+      font-weight:800; padding:11px 16px; border-radius:12px; cursor:pointer;
+
+      transition: transform .06s ease, box-shadow .18s ease, filter .15s ease, background .15s ease, border-color .15s ease;
+
+      font-size:14px; letter-spacing: -.2px;
+
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.outline{ background:#fff; color:#0f172a; border:1px solid #e5e7eb; }
+
+    .btn.red{
+
+      background: var(--brand-primary); color:#fff; box-shadow: 0 8px 20px rgba(165,0,52,.28);
+
+    }
+
+    .btn.red:hover{ filter:brightness(1.05); }
+
+    .btn.gray{
+
+      background: var(--lg-gray); color:#fff; box-shadow: 0 8px 20px rgba(107,107,107,.25);
+
+    }
+
+    .btn.gray:hover{ filter:brightness(1.06); }
+
+
+
+    /* ================== Quick Contact (빠른 문의) ================== */
+
+    .quickbar{
+
+      position: fixed; right: 20px; bottom: 20px; z-index: 1000;
+
+      font-family: var(--font-base);
+
+    }
+
+    .quick-toggle{
+
+      background: var(--lg-red); color:#fff;
+
+      border: none; border-radius: 999px;
+
+      padding: 10px 14px; font-weight: 900; cursor: pointer;
+
+      box-shadow: 0 10px 22px rgba(165,0,52,.30);
+
+    }
+
+    .quick-panel{
+
+      margin-top: 10px; width: min(340px, 92vw);
+
+      background: #fff; border: 1px solid var(--border);
+
+      border-radius: 14px; box-shadow: var(--shadow-md);
+
+      overflow: hidden; display: none;
+
+    }
+
+    .quick-head{
+
+      background: linear-gradient(90deg, var(--lg-red), #c5144a);
+
+      color:#fff; padding: 10px 14px; font-weight: 800; display:flex; align-items:center; justify-content:space-between;
+
+    }
+
+    .quick-body{ padding: 12px 14px; background:#fff; }
+
+    .quick-row{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+
+    .quick-body input, .quick-body textarea{
+
+      width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid var(--border); border-radius:10px; font-size:14px;
+
+    }
+
+    .quick-body textarea{ min-height: 90px; resize: vertical; }
+
+    .quick-actions{ display:flex; gap:8px; justify-content:flex-end; padding: 10px 14px 14px; background:#fafafa; border-top: 1px solid var(--border); }
+
+    .link{
+
+      display:inline-flex; align-items:center; gap:6px; text-decoration:none; font-weight:800;
+
+      padding:10px 12px; border-radius:10px; border:1px solid var(--border); color:#111827; background:#fff;
+
+    }
+
+    .link.phone{ border-color:#e5e7eb; }
+
+    .link.mail{ background: var(--lg-red); border-color: transparent; color:#fff; }
+
+    .link:hover{ filter:brightness(1.04); }
+
+    .quick-close{
+
+      background: transparent; border:none; color:#ffe3ea; font-weight:900; cursor:pointer;
+
+    }
+
+
+
+    /* ======== (추가) 전화 팝오버 ======== */
+
+    .phone-wrap{
+
+      position: relative;
+
+      display: inline-block;
+
+    }
+
+    .phone-pop{
+
+      position: absolute;
+
+      left: 0;
+
+      bottom: calc(100% + 6px);
+
+      min-width: 200px;
+
+      background: #fff;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      box-shadow: var(--shadow-md);
+
+      padding: 6px;
+
+      display: none;
+
+      z-index: 1001;
+
+    }
+
+    .phone-pop::after{
+
+      content:"";
+
+      position:absolute;
+
+      left: 18px;
+
+      top: 100%;
+
+      border: 7px solid transparent;
+
+      border-top-color: #fff;
+
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.06));
+
+    }
+
+    .phone-wrap:hover .phone-pop,
+
+    .phone-wrap:focus-within .phone-pop{
+
+      display: block;
+
+    }
+
+    .pop-item{
+
+      display: flex;
+
+      width: 100%;
+
+      align-items: center;
+
+      gap: 8px;
+
+      font-size: 14px;
+
+      padding: 10px 10px;
+
+      border-radius: 8px;
+
+      border: 1px solid transparent;
+
+      background: #fff;
+
+      color: #111827;
+
+      cursor: pointer;
+
+      text-decoration: none;
+
+      text-align: left;
+
+    }
+
+    .pop-item:hover{
+
+      background: #f8fafc;
+
+      border-color: #e5e7eb;
+
+    }
+
+    .pop-item:active{ transform: translateY(1px); }
+
+    #qNumberText.num{
+
+      margin-left: 4px;
+
+      font-weight: 800;
+
+      color: var(--lg-red);
+
+    }
+
+
+
+    /* 작은 토스트 */
+
+    .toast{
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 24px;
+
+      transform: translateX(-50%);
+
+      background: #111827;
+
+      color:#fff;
+
+      padding: 10px 14px;
+
+      border-radius: 10px;
+
+      font-size: 13px;
+
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .18s ease, transform .18s ease;
+
+      z-index: 2000;
+
+    }
+
+    .toast.show{
+
+      opacity: 1;
+
+      transform: translateX(-50%) translateY(-4px);
+
+    }
+
+
+
+    /* ================== Print ================== */
+
+    @media print{
+
+      body{ background:#fff; }
+
+      .wrap{ margin:0; max-width:100%; padding:0; }
+
+      .actions, .hero, .quickbar{ display:none !important; }
+
+      .card{ background:#fff; border: none; box-shadow:none; border-radius:0; }
+
+      .section{ break-inside: avoid; page-break-inside: avoid; background:#fff; }
+
+      input, select, textarea{ border:1px solid #999 !important; box-shadow:none !important; background:#fff !important; color:#111827 !important; }
+
+    }
+
+* ===== Hero 우측 로고 ===== */
+.hero-right{
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.hero-brand{
+  height: 55px;       /* 👈 지금 요청한 ‘더 작게’ */
+  width: auto;
+  opacity: 0.8;
+}
+
+/* 모바일에서는 숨김 */
+@media (max-width: 680px){
+  .hero-right{
+    display: none;
+  }
+}
+
+  </style>
+  
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("3lmAqsrxinrDM7HAS"); 
+  })();
+</script>
+
+
+
+</head>
+
+<body>
+
+  <main class="wrap">
+
+    <!-- Hero Header -->
+
+    <header class="hero" aria-label="문서 헤더">
+
+      
+<div class="hero-content">
+  <div class="hero-left">
+    <h1 class="hero-title">🎬 영상 제작 요청서</h1>
+    <p class="hero-sub">
+      촬영·편집·디자인·송출 등 요청 시 아래 양식에 맞춰 자세히 작성해 주세요.
+    </p>
+  </div>
+
+  <!-- ✅ 우측 로고 추가 -->
+  <div class="hero-right">
+    <img
+      src="https://media-cdn.linkareer.com/activity_manager/logos/459503"
+      alt="LG SW Bootcamp 로고"
+      class="hero-brand"
+    />
+  </div>
+</div>
+
+
+    </header>
+
+
+
+    <form id="requestForm" class="card" onsubmit="return handleSubmit(event)">
+
+      <!-- [요청자 정보] -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div class="section-icon">👤</div>
+
+          <h2 class="section-title">요청자 정보</h2>
+
+          <span class="section-chip">필수 기입</span>
+
+        </div>
+
+        <div class="grid">
+
+          <div class="col-4 field">
+
+            <label for="name" class="req">성명</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">🪪</span>
+
+              <input type="text" id="name" name="name" class="with-prefix" placeholder="홍길동" required />
+
+            </div>
+
+            <div class="error" data-for="name">성명을 입력해 주세요.</div>
+
+          </div>
+
+
+
+          <div class="col-4 field">
+
+            <label for="dept" class="req">소속(본부)</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">🏢</span>
+
+              <input type="text" id="dept" name="dept" class="with-prefix" placeholder="예) CTO부문 ABC팀" required />
+
+            </div>
+
+            <div class="error" data-for="dept">소속을 입력해 주세요.</div>
+
+          </div>
+
+
+
+          <div class="col-4 field">
+
+            <label for="site" class="req">사업장 위치</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">📍</span>
+
+              <input type="text" id="site" name="site" class="with-prefix" placeholder="예) 마곡사이언스파크" required />
+
+            </div>
+
+            <div class="error" data-for="site">사업장 위치를 입력해 주세요.</div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- [요청사항] -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div class="section-icon">📝</div>
+
+          <h2 class="section-title">요청사항</h2>
+
+        </div>
+
+        <div class="grid">
+
+          <div class="col-6 field">
+
+            <label for="category" class="req">요청 항목</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">🎯</span>
+
+              <select id="category" name="category" class="with-prefix" required>
+
+                <option value="">선택하세요</option>
+
+                <option>촬영</option>
+
+                <option>사진촬영</option>
+
+                <option>편집</option>
+
+                <option>녹화</option>
+
+                <option>디자인</option>
+
+                <option>송출</option>
+
+                <option>기타</option>
+
+              </select>
+
+            </div>
+
+            <div class="error" data-for="category">요청 항목을 선택해 주세요.</div>
+
+          </div>
+
+
+
+          <div class="col-6 field">
+
+            <label for="date_request" class="req">요청 일자</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">📅</span>
+
+              <input type="date" id="date_request" name="date_request" class="with-prefix" required />
+
+            </div>
+
+            <div class="error" data-for="date_request">요청 일자를 선택해 주세요.</div>
+
+          </div>
+
+
+
+          <div class="col-6 field">
+
+            <label for="date_due" class="req">납기일 일자</label>
+
+            <div class="input-wrap">
+
+              <span class="prefix">⏳</span>
+
+              <input type="date" id="date_due" name="date_due" class="with-prefix" required />
+
+            </div>
+
+            <div class="hint">※ 납기일은 요청 난이도·리소스에 따라 조율될 수 있습니다.</div>
+
+            <div class="error" data-for="date_due">납기일을 선택해 주세요.</div>
+
+          </div>
+
+
+
+          <div class="col-12 field">
+
+            <label for="detail" class="req">요청 상세내용</label>
+
+            <textarea id="detail" name="detail"
+
+              placeholder="예) 3/28 교육행사 하이라이트 영상(1분), 로고 애니/인트로 포함, 원본 촬영본 제공 필요, 행사장 전경컷 우선 등"
+
+              required></textarea>
+
+            <div class="error" data-for="detail">요청 상세내용을 입력해 주세요.</div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- [추가문의] -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div class="section-icon">💬</div>
+
+          <h2 class="section-title">추가문의</h2>
+
+          <span class="section-chip">선택</span>
+
+        </div>
+
+        <div class="grid">
+
+          <div class="col-12 field">
+
+            <label for="question">문의사항</label>
+
+            <textarea id="question" name="question" placeholder="추가 문의나 참고 링크(예: 공유드라이브 폴더, 레퍼런스 URL)를 적어주세요."></textarea>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- 액션 -->
+
+      <div class="actions">
+
+        <button type="reset" class="btn outline">초기화</button>
+
+        <button type="submit" class="btn red" id="submitBtn">제출(이메일 전송)</button>
+
+        <button type="button" class="btn gray" onclick="window.print()">인쇄 / PDF 저장</button>
+
+      </div>
+
+    </form>
+
+  </main>
+
+
+
+  <!-- 빠른 문의 (하단 고정 토글 바) -->
+
+  <aside class="quickbar" aria-live="polite">
+
+    <button class="quick-toggle" id="quickToggle">⚡ 빠른 문의</button>
+
+    <div class="quick-panel" id="quickPanel" role="dialog" aria-modal="false" aria-labelledby="qh">
+
+      <div class="quick-head">
+
+        <div id="qh">⚡ 긴급 요청 빠른 문의</div>
+
+        <button class="quick-close" type="button" id="quickClose" aria-label="닫기">✕</button>
+
+      </div>
+
+      <div class="quick-body">
+
+        <div class="quick-row" style="margin-bottom:10px;">
+
+          <input type="text" id="qName" placeholder="성명" />
+
+          <input type="text" id="qPhone" placeholder="연락처(선택)" />
+
+        </div>
+
+        <textarea id="qMsg" placeholder="긴급 요청 내용을 간단히 적어주세요. (예: 납기, 장소, 범위)"></textarea>
+
+      </div>
+
+      <div class="quick-actions">
+
+        <!-- (변경) 전화 버튼 + 팝오버 -->
+
+        <div class="phone-wrap">
+
+          <a class="link phone" id="qPhoneLink" href="#" aria-haspopup="true" aria-expanded="false" title="전화 걸기 / 번호 보기">📞 전화</a>
+
+          <div class="phone-pop" role="menu" aria-label="전화 옵션">
+
+            <a class="pop-item" id="qCall" role="menuitem" href="#">📞 전화 걸기</a>   
+
+          </div>
+
+        </div>
+
+
+
+        <a class="link mail" id="qMail" href="#">✉️ 긴급 메일</a>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+
+  <script>
+
+    // ===== 제출 → 이메일 전송 =====
+
+    function handleSubmit(e){
+
+      e.preventDefault();
+
+
+
+      const form = e.target;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+
+
+      // 오류 초기화
+
+      form.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+
+
+
+      // 필수값 체크
+
+      const required = ['name','dept','site','category','date_request','date_due','detail'];
+
+      let ok = true;
+
+      required.forEach(key=>{
+
+        if(!String(data[key]||'').trim()){
+
+          ok = false;
+
+          const err = form.querySelector(`.error[data-for="${key}"]`);
+
+          if(err) err.style.display = 'block';
+
+        }
+
+      });
+
+
+
+      // 날짜 체크: 납기일 >= 요청일자
+
+      const r = data.date_request ? new Date(data.date_request) : null;
+
+      const d = data.date_due ? new Date(data.date_due) : null;
+
+      if(r && d && d < r){
+
+        ok = false;
+
+        const err = form.querySelector('.error[data-for="date_due"]');
+
+        if(err){
+
+          err.textContent = '납기일은 요청 일자와 같거나 이후여야 합니다.';
+
+          err.style.display = 'block';
+
+        }
+
+      }
+
+
+
+      if(!ok) return false;
+
+
+
+// ✅ EmailJS 자동 메일 발송
+emailjs.send(
+  "service_g891qg9",   // 예: service_xxxxx
+  "template_g9wpocw",    // EmailJS 템플릿 ID
+  data                // form name 그대로 전달
+).then(() => {
+  alert("✅ 요청이 정상적으로 메일로 전송되었습니다.");
+  form.reset();
+}).catch(error => {
+  alert("❌ 메일 전송 실패\n" + error.text);
+});
+
+
+
+
+      return false;
+
+    }
+
+
+
+    // ===== 빠른 문의 토글 & 메일/전화 링크 구성 =====
+
+    const quickToggle = document.getElementById('quickToggle');
+
+    const quickPanel  = document.getElementById('quickPanel');
+
+    const quickClose  = document.getElementById('quickClose');
+
+    const qName = document.getElementById('qName');
+
+    const qPhone= document.getElementById('qPhone');
+
+    const qMsg  = document.getElementById('qMsg');
+
+    const qMail = document.getElementById('qMail');
+
+
+
+    const QUICK_EMAIL = 'seoryun.jang@lgepartner.com';
+
+    const QUICK_PHONE = '010-3068-9291'; // 필요 시 교체
+
+
+
+// ✅ 긴급 메일 클릭 → EmailJS 전송
+qMail.addEventListener('click', (e) => {
+  e.preventDefault(); // a 태그 기본 동작 차단
+
+  const quickData = {
+    name: qName.value || '이름 미기재',
+    phone: qPhone.value || '연락처 미기재',
+    message: qMsg.value || '내용 없음'
+  };
+
+  emailjs.send(
+    "service_g891qg9",      // ✅ 동일한 Service ID
+    "template_quick",       // ✅ 긴급문의용 템플릿 ID
+    quickData
+  ).then(() => {
+    alert("✅ 긴급 문의가 전송되었습니다.");
+    qName.value = '';
+    qPhone.value = '';
+    qMsg.value = '';
+    quickPanel.style.display = 'none';
+  }).catch(err => {
+    alert("❌ 긴급 문의 전송 실패\n" + err.text);
+  });
+});
+
+
+    
+   quickToggle.addEventListener('click', ()=>{
+
+  const open = quickPanel.style.display === 'block';
+  quickPanel.style.display = open ? 'none' : 'block';
+
+  if(!open){ qName.focus(); }
+});
+
+    quickClose.addEventListener('click', ()=> quickPanel.style.display = 'none');
+
+    [qName,qPhone,qMsg].forEach(el => el.addEventListener('input', ()=>{}));
+
+
+
+    // ESC 로 닫기
+
+    document.addEventListener('keydown', (e)=>{
+
+      if(e.key === 'Escape'){ quickPanel.style.display = 'none'; }
+
+    });
+
+
+
+    /* ===== (추가) 전화 버튼: 라벨/링크 동기화 + 팝오버 동작 ===== */
+
+    const qPhoneLink   = document.getElementById('qPhoneLink');   // 메인 전화 버튼(호버 트리거)
+
+    const qCall        = document.getElementById('qCall');        // 팝오버: 전화 걸기
+
+    
+
+
+
+    // 간단 토스트 생성
+
+    let toastEl = document.querySelector('.toast');
+
+    if(!toastEl){
+
+      toastEl = document.createElement('div');
+
+      toastEl.className = 'toast';
+
+      document.body.appendChild(toastEl);
+
+    }
+
+    function showToast(msg){
+
+      toastEl.textContent = msg;
+
+      toastEl.classList.add('show');
+
+      setTimeout(()=> toastEl.classList.remove('show'), 1400);
+
+    }
+
+
+
+    function normalizePhoneForTel(phone) {
+
+      // tel: 링크용 — 숫자와 +만 남김
+
+      return (phone || '').replace(/[^\d+]/g, '');
+
+    }
+
+
+
+    function updatePhoneUI(){
+
+      // 버튼 라벨(메인)
+
+      qPhoneLink.textContent = `📞 ${QUICK_PHONE}`;
+
+      qPhoneLink.setAttribute('title', `전화 걸기 / 번호 보기`);
+
+
+
+      // 전화 연결 대상
+
+      const telTarget = normalizePhoneForTel(QUICK_PHONE);
+
+
+
+      // 메인 버튼/팝오버 "전화 걸기" 둘 다 tel: 링크 연결
+
+      qPhoneLink.setAttribute('href', `tel:${telTarget}`);
+
+      qCall.setAttribute('href', `tel:${telTarget}`);
+
+
+
+      // 팝오버: 번호 표시
+
+      qNumberText.textContent = QUICK_PHONE;
+
+    }
+
+
+
+    // 초기 1회 동기화
+
+    updatePhoneUI();
+
+
+
+    // 번호 보기 클릭 시 → 클립보드 복사 + 토스트
+
+    
+
+
+
+    // 키보드 접근성: 메인 버튼에서 엔터/스페이스 → 팝오버 첫 항목 포커스
+
+    qPhoneLink.addEventListener('keydown', (e)=>{
+
+      if(e.key === 'Enter' || e.key === ' '){
+
+        e.preventDefault();
+
+        qCall.focus();
+
+      }
+
+    });
+
+
+
+    // aria-expanded 토글(시각적 상태와 동기화)
+
+    const phoneWrap = document.querySelector('.phone-wrap');
+
+    phoneWrap.addEventListener('mouseenter', ()=> qPhoneLink.setAttribute('aria-expanded','true'));
+
+    phoneWrap.addEventListener('mouseleave', ()=> qPhoneLink.setAttribute('aria-expanded','false'));
+
+    phoneWrap.addEventListener('focusin',   ()=> qPhoneLink.setAttribute('aria-expanded','true'));
+
+    phoneWrap.addEventListener('focusout',  ()=> qPhoneLink.setAttribute('aria-expanded','false'));
+
+  </script>
+
+</body>
+
+</html>
+
+
